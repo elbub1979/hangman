@@ -5,7 +5,17 @@ require_relative 'lib/game'
 puts 'Всем привет!'
 
 # 2. Загрузить случайное слово из файла
-word = File.readlines("#{__dir__}/data/words.txt", encoding: 'UTF-8', chomp: true).sample
+begin
+  word = File.readlines("#{__dir__}/data/words.txt", encoding: 'UTF-8', chomp: true).sample.upcase
+rescue Errno::ENOENT
+  puts 'Файл со словами отсутствует'
+  exit
+rescue NoMethodError
+  puts 'Файл со словами пустой'
+  exit
+end
+
+
 game = Game.new(word)
 console_interface = ConsoleInterface.new(game)
 
