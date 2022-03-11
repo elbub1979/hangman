@@ -2,11 +2,11 @@ class ConsoleInterface
   # В константе FIGURES будут лежать все текстовые файлы из папки figures,
   # помещённые в массив. Один элемент массива — одна строка с содержимым целого
   # файла.
+  #
   FIGURES =
     Dir["#{__dir__}/../data/figures/*.txt"]
     .sort
     .map { |file_name| File.read(file_name) }
-
   # На вход конструктор класса ConsoleInterface принимает экземпляр класса Game.
   #
   # Экземпляр ConsoleInterface выводит информацию юзеру. При выводе использует
