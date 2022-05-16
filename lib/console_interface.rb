@@ -1,3 +1,5 @@
+require 'colorize'
+
 class ConsoleInterface
   # В константе FIGURES будут лежать все текстовые файлы из папки figures,
   # помещённые в массив. Один элемент массива — одна строка с содержимым целого
@@ -5,8 +7,8 @@ class ConsoleInterface
   #
   FIGURES =
     Dir["#{__dir__}/../data/figures/*.txt"]
-    .sort
-    .map { |file_name| File.read(file_name) }
+      .sort
+      .map { |file_name| File.read(file_name) }
   # На вход конструктор класса ConsoleInterface принимает экземпляр класса Game.
   #
   # Экземпляр ConsoleInterface выводит информацию юзеру. При выводе использует
@@ -19,17 +21,15 @@ class ConsoleInterface
   # Выводит в консоль текущее состояние игры, используя данные из экземпляра
   # класса Game (количество ошибок, сколько осталось попыток и т.д.)
   def print_out
-    puts <<~GAME_STATUS
-      Слово: #{word_to_show}
-      #{figure}
-      Ошибки (#{@game.errors_made}): #{errors_to_show}
-      У вас осталось ошибок: #{@game.errors_allowed}
-    GAME_STATUS
+    puts "Слово: #{word_to_show}".colorize(color: :blue)
+    puts figure.to_s.colorize(color: :yellow)
+    puts "Ошибки (#{@game.errors_made}): #{errors_to_show}".colorize(color: :red)
+    puts "У вас осталось ошибок: #{@game.errors_allowed}".colorize(color: :white)
 
     if @game.won?
-      puts 'Поздравляем, вы выиграли!'
+      puts 'Поздравляем, вы выиграли!'.colorize(color: :yellow, mode: :bold)
     elsif @game.lost?
-      puts "Вы проиграли, загаданное слово: #{@game.word}"
+      puts "Вы проиграли, загаданное слово: #{@game.word}".colorize(color: :red, mode: :bold)
     end
   end
 
